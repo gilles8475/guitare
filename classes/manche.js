@@ -306,6 +306,9 @@ class Manche {
     var result;
     //une fonction qui convertit un chiffre en romain
     switch (n) {
+      case "0":
+        result='NULLA';
+        break;
       case "1":
         result='I';
         break;
