@@ -18,7 +18,7 @@ function createFormulaire(){
   var windowWidth=window.innerWidth;
 
   newSVG.setAttribute("width",windowWidth*0.9);
-  newSVG.setAttribute("height",windowHeight*0.25);
+  newSVG.setAttribute("height",windowHeight*0.20);
   newSVG.setAttribute("id",idSvg);
   var el=document.getElementById('main');
 
@@ -26,7 +26,7 @@ function createFormulaire(){
   titre.innerHTML= "Exercice "+(1+Manche.NbInstance);
   el.appendChild(titre);
   el.appendChild(newSVG);
-  var newManche=new Manche(idSvg,25);
+  var newManche=new Manche(idSvg,15);
   var newFormulaire= new Formulaire(20,newManche);
 
 
