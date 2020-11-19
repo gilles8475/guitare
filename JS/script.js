@@ -18,7 +18,7 @@ function createFormulaire(){
   var windowWidth=window.innerWidth;
 
   newSVG.setAttribute("width",windowWidth*0.9);
-  newSVG.setAttribute("height",windowHeight*0.20);
+  newSVG.setAttribute("height",windowHeight*0.25);
   newSVG.setAttribute("id",idSvg);
   var el=document.getElementById('main');
 
@@ -32,19 +32,27 @@ function createFormulaire(){
 
   var bout=document.createElement("button");
   var bout1=document.createElement("button");
+  var bout2=document.createElement("button");
 
   bout.innerHTML= "Marque";
   bout1.innerHTML= "Affiche intervalles";
+  bout2.innerHTML= "Affiche le nom des notes";
+
   bout.style.backgroundColor='#8B0000';
   bout.style.color='white';
   bout.style.width='20%';
   bout1.style.width='20%';
   bout1.style.backgroundColor='#8B0000';
   bout1.style.color='white';
+  bout2.style.width='20%';
+  bout2.style.backgroundColor='#8B0000';
+  bout2.style.color='white';
   el.appendChild(bout);
   el.appendChild(bout1);
+  el.appendChild(bout2);
   bout.onclick= function(event,form=newFormulaire, manch=newManche){ marque(form,manch);};
   bout1.onclick = function(event, M=newManche){M.showIntervals()};
+  bout2.onclick = function(event, M=newManche){M.showSymboles()};
 
 }
 

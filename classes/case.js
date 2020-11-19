@@ -60,13 +60,14 @@ class Case {
         }
       }
       if (cse.owner.showedIntervals){cse.owner.showIntervals();}
+      if (cse.owner.showedSymboles){cse.owner.showSymboles();}
     }
 
 
   }
   get absolutePosition(){
     /*la fonction revoie le numero de la case si la note était jouée sur
-    la sixieme corde ex corde 2 case 3 (do) <=> corde 1 case 8
+    la sixieme corde ex corde 5 case 3 (do) <=> corde 6 case 8
     */
     var x=this.corde;//numero de corde
     var y=this.numCase;
@@ -125,5 +126,9 @@ class Case {
 
   displayInterval(interval){
     this.note.interval=interval;
+  }
+
+  displaySymbole(symboleNote){
+    this.note.symbole=symboleNote;
   }
 }

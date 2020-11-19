@@ -15,6 +15,8 @@ class Manche {
     this._fondamentale = undefined; //contiendra la fondamentale
     this._rootDefined=false;//variable qui permettra de savoir si une fondamentale est définie
     this.showedIntervals=false; //une propiété qui servira à afficher les notes sous forme d'interval selon une option cochée ou non
+    this.showedSymboles=false; //une propiété qui servira à afficher le nom des notes
+
     let MANCHE = document.getElementById(idManche);
 
     MANCHE.setAttribute("width",this.largeur);
@@ -130,7 +132,7 @@ class Manche {
   }
 
   get scale(){
-//retourne un tableau d'intervales par rapport à la fondamentales pour toutes les notes jouées
+//retourne un tableau d'intervales par rapport à la fondamentale pour toutes les notes jouées
     var intervalRef=["R",
                     "b2",
                     "M2",
@@ -181,6 +183,28 @@ class Manche {
 
     }
     return relTab;
+  }
+
+  get absoluteScale(){
+    //methode qui renvoie le nom des notes jouées sous forme de tableau
+    var gammeRef=["Mi",
+                    "Fa",
+                    "Fa#",
+                    "Sol",
+                    "Lab",
+                    "La",
+                    "Sib",
+                    "Si",
+                    "Do",
+                    "Do#",
+                    "Re",
+                    "Mib",
+                    "Mi"];
+    var NotesJouees=this.playedNotes()[0];
+    NotesJouees=NotesJouees.map(function(cse){return cse.absolutePosition});//la position absolue de la case cad ramenée à la corde 6
+    NotesJouees=NotesJouees.map(function(num){return num%12;}); //on ramene toutes les notes jouées sur une octave
+    NotesJouees=NotesJouees.map(function(num){return gammeRef[num];});
+    return NotesJouees;
   }
 
   playedNotes(){
@@ -244,8 +268,10 @@ class Manche {
   }
 
   showIntervals(){
+    this.hideSymboles();
     if (!this._rootDefined){return;}
     this.hideIntervals();
+
     var notes=this.playedNotes()[0];
 /*
 
@@ -265,6 +291,31 @@ class Manche {
 
   }
 
+  showSymboles(){
+
+    this.hideIntervals();
+    this.hideSymboles();
+    var notes=this.playedNotes()[0];
+/*
+
+    notes.forEach(function(n){
+                  if(n._interval){
+                    n._interval.remove();
+                  }
+                }); //supprime les intervals affichés s'il y en a
+*/
+    this.showedSymboles=true;
+    var absScale=this.absoluteScale;
+    console.log(absScale);
+    var idx=0;//index qui servira à faire correspondre la case du tableau note à son interval dans le tableau scale
+    for (var n of notes){
+      console.log(absScale[idx]);
+      n.displaySymbole(absScale[idx]);
+      idx+=1;
+    }
+
+  }
+
   hideIntervals(){
 
     //supprime les intervals affichés s'il y en a
@@ -279,11 +330,27 @@ class Manche {
     this.showedIntervals=false;
   }
 
+  hideSymboles(){
+
+    //supprime les intervals affichés s'il y en a
+    var notes=this.playedNotes()[0];
+
+    notes.forEach(function(n){
+                  if(n.note._symbole){
+                    n.note._symbole.remove();
+                    n.note.setDefaultRepere();
+                  }
+                });
+    this.showedSymboles=false;
+  }
+
   reset(){
-    //fonction qui va enlever toutes les noites jouées
+    //fonction qui va enlever toutes les notes jouées
     this._fondamentale=undefined;
     this._rootDefined=false;
     this.showedIntervals=false;
+    this.showedSymboles=false;
+
     for (var c of this.cases){
       for (var s of c){
         s.root=false;
